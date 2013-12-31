@@ -1,0 +1,9 @@
+.selected {
+  font-weight: bold;
+  background-color: #eee;
+}
+
+.pp {
+  padding: 10px 4px;
+}
+

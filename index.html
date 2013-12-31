@@ -1,0 +1,59 @@
+<html>
+<head>
+    <title>Euclid's First Proposition</title>
+    <link rel="stylesheet" href="index.css" type="text/css" />
+    <script src="jquery.js"></script>
+    <script src="processing.js"></script>
+    <script src="euclid.js"></script>
+</head>
+<body>
+
+<table><tr>
+<td>
+    <div id="prop1_1">
+        <h3>Prop 1: On a given finite right line (AB) to construct an equilateral triangle.</h3>
+
+        <div class="pp line1">With A as centre, and AB as radius, describe the circle BCD (Post. iii.).</div>
+
+        <div class="pp line2">With B as centre, and BA as radius, describe the circle ACE, cutting the former circle in C.</div>
+
+        <div class="pp line3">Join CA, CB (Post. i.).</div>
+
+        <div class="pp line4">Then ABC is the equilateral triangle required.</div>
+
+        <div class="pp line5">Because A is the centre of the circle BCD, AC is equal to AB (Def. xxxii.).</div>
+
+        <div class="pp line6">Again, because B is the centre of the circle ACE, BC is equal to BA.</div>
+
+        <div class="pp line7">
+            Hence we have proved.<br/>
+            AC = AB;<br/>
+            and BC = AB
+        </div>
+
+        <div class="pp line8">
+            But things which are equal to the same are equal to one another (Axiom i.);
+            therefore AC is equal to BC;
+        </div>
+
+        <div class="pp line9">
+            therefore the three lines AB, BC, CA are equal
+            to one another. Hence the triangle ABC is equilateral (Def. xxi.); and it is
+            described on the given line AB, which was required to be done.
+        </div>
+    </div>
+</td>
+<td>
+    <canvas id="canvas1"></canvas>
+</td>
+</tr></table>
+
+<br/>
+<br/>
+<br/>
+<hr/>
+
+<I>The source material was taken from <A href="http://www.gutenberg.org/ebooks/21076">http://www.gutenberg.org/ebooks/21076</A></I>
+
+</body>
+</html>
