@@ -1,30 +1,100 @@
+
+var propositions = {};
+var arrText = [];
+var arrDiagram = [];
+
+var declareProposition = function(sProp, objProp)
+{
+    propositions[sProp] = objProp;
+}
+
+var declareText = function(_nBook, _nProp, _nLine, _arrElms)
+{
+    arrText.push(
+    {
+        'nBook':   _nBook,
+        'nProp':   _nProp,
+        'nLine':   _nLine,
+        'arrElms': _arrElms,
+    });
+}
+
+var declareDiagram = function(_sID, _sProp)
+{
+    arrDiagram.push(
+    {
+        'sID':   _sID,
+        'sProp': _sProp,
+    });
+}
+
+var createMoveablePoint = function(_x, _y, _align)
+{
+    function Point()
+    {
+        this.x = _x;
+        this.y = _y;
+        this.align = _align;
+        this.selected = false;
+        this.moveable = true;
+        this.draw = function(processing)
+        {
+            processing.noStroke();
+            processing.fill(255, 0, 0, 200);
+            processing.rect(this.x, this.y, 10, 10);
+
+            processing.fill(0);
+//            var adjustment = this.alignTop ? -8 : 18;
+            var adjustment = 18;
+            processing.text(this.name, this.x - 5, this.y + adjustment);
+        };
+    }
+
+    return new Point;
+}
+
+var createPoint = function(_align)
+{
+    var point = createMoveablePoint(0, 0, _align);
+    point.moveable = false;
+    return point;
+}
+
 $(document).ready(function()
 {
-    var canvas = document.getElementById("canvas1");
-    var processingInstance = new Processing(canvas, function(processing)
+    for (var nDiagram in arrDiagram)
     {
-        function createPoint(_x, _y)
+        var diagram = arrDiagram[nDiagram];
+    
+        var canvas = document.getElementById(diagram.sID);
+        diagram.processing = new Processing(canvas, function(processing)
         {
-            var point = 
+            processing.setup = function()
             {
-               'x': _x,
-               'y': _y,
-               'alignTop': false,
-               'selected': false,
-               'draw': function()
-               {
-                    processing.noStroke();
-                    processing.fill(255, 0, 0, 200);
-                    processing.rect(this.x, this.y, 10, 10);
+                processing.size(300,300);
+                processing.rectMode(processing.CENTER);
+            }
+            
+            processing.draw = function()
+            {
+                processing.background(200);
+                
+                var elms = propositions[diagram.sProp].elms;
+                
+                for(var sElm in elms)
+                {
+                    var elm = elms[sElm];
+                    elm.name = sElm;
+                    elm.draw(processing);
+                }
+                
+                processing.noLoop();
+            }
+        });
+    }
+});
 
-                    processing.fill(0);
-                    var adjustment = this.alignTop ? -8 : 18;
-                    processing.text(this.name, this.x - 5, this.y + adjustment);
-               },
-            };
-            return point;
-        }
-
+/*
         function createLine(_pt1, _pt2)
         {
             var line =
@@ -87,9 +157,9 @@ $(document).ready(function()
         elms.AC = null;
         elms.D = null;
         elms.E = null;
-        elms.A = createPoint(110, 150);
-        elms.B = createPoint(190, 150);
-        elms.C = createPoint(110 + (80*Math.cos(myAngle)), 150 + (80*Math.sin(myAngle)));
+        elms.A = new Point(110, 150);
+        elms.B = new Point(190, 150);
+        elms.C = new Point(110 + (80*Math.cos(myAngle)), 150 + (80*Math.sin(myAngle)));
         elms.C.alignTop = true;
         elms.AB = createLine(elms.A, elms.B);
         elms.BC = createLine(elms.B, elms.C);
@@ -123,60 +193,7 @@ $(document).ready(function()
                 if (bSelected == false && $(event.target).hasClass('pp'))
                 {
                     $(event.target).addClass('selected');
-                
-                    if ($(event.target).hasClass('line1'))
-                    {
-                        elms.D.selected = true;
-                        elms.AB.selected = true;
-                    }
-                    else if ($(event.target).hasClass('line2'))
-                    {
-                        elms.E.selected = true;
-                        elms.AB.selected = true;
-                    }
-                    else if ($(event.target).hasClass('line3'))
-                    {
-                        elms.BC.selected = true;
-                        elms.AC.selected = true;
-                    }
-                    else if ($(event.target).hasClass('line4'))
-                    {
-                        elms.AB.selected = true;
-                        elms.BC.selected = true;
-                        elms.AC.selected = true;
-                    }
-                    else if ($(event.target).hasClass('line5'))
-                    {
-                        elms.AB.selected = true;
-                        elms.AC.selected = true;
-                        elms.D.selected = true;
-                    }
-                    else if ($(event.target).hasClass('line6'))
-                    {
-                        elms.BC.selected = true;
-                        elms.AB.selected = true;
-                        elms.E.selected = true;
-                    }
-                    else if ($(event.target).hasClass('line7'))
-                    {
-                        elms.AB.selected = true;
-                        elms.BC.selected = true;
-                        elms.AC.selected = true;
-                    }
-                    else if ($(event.target).hasClass('line8'))
-                    {
-                        elms.AB.selected = true;
-                        elms.BC.selected = true;
-                        elms.AC.selected = true;
-                    }
-                    else if ($(event.target).hasClass('line9'))
-                    {
-                        elms.AB.selected = true;
-                        elms.BC.selected = true;
-                        elms.AC.selected = true;
-                    }
-                }
-                
+                }                
             });
         }
         
@@ -192,4 +209,4 @@ $(document).ready(function()
     });
 
 });
-
+*/

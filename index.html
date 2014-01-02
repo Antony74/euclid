@@ -11,40 +11,93 @@
 <table><tr>
 <td>
     <div id="prop1_1">
+    
+        <script>
+        
+            declareProposition('xyz', new function()
+            {
+                this.elms =
+                {
+                    A:  createMoveablePoint(110, 150, 'left'),
+                    B:  createMoveablePoint(190, 150, 'right'),
+//                    C:  createPoint('top'),
+//                    AB: createLine(elms.A, elms.B),
+//                    BC: createLine(elms.B, elms.C),
+//                    AC: createLine(elms.A, elms.C),
+//                    D:  createCircle(elms.A, 80, 'bottom'),
+//                    E:  createCircle(elms.B, 80, 'bottom'),
+                };
+                this.update = function()
+                {
+//                    updateEquilateral(this.elms.A, this.elms.B, this.elms.C, 'left');
+                };
+            });
+        </script>
+    
         <h3>Prop 1: On a given finite right line (AB) to construct an equilateral triangle.</h3>
 
-        <div class="pp line1">With A as centre, and AB as radius, describe the circle BCD (Post. iii.).</div>
+        <div id="prop1_1_1" class="pp">With A as centre, and AB as radius, describe the circle BCD (Post. iii.).</div>
+        <script>
+            declareText(1, 1, 1, ['D', 'AB']);
+        </script>
 
-        <div class="pp line2">With B as centre, and BA as radius, describe the circle ACE, cutting the former circle in C.</div>
+        <div id="prop1_1_2" class="pp">With B as centre, and BA as radius, describe the circle ACE, cutting the former circle in C.</div>
+        <script>
+            declareText(1, 1, 2, ['E', 'AB']);
+        </script>
 
-        <div class="pp line3">Join CA, CB (Post. i.).</div>
+        <div id="prop1_1_3" class="pp">Join CA, CB (Post. i.).</div>
+        <script>
+            declareText(1, 1, 3, ['BC', 'AC']);
+        </script>
 
-        <div class="pp line4">Then ABC is the equilateral triangle required.</div>
+        <div id="prop1_1_4" class="pp line4">Then ABC is the equilateral triangle required.</div>
+        <script>
+            declareText(1, 1, 4, ['AB', 'BC', 'AC']);
+        </script>
 
-        <div class="pp line5">Because A is the centre of the circle BCD, AC is equal to AB (Def. xxxii.).</div>
+        <div id="prop1_1_5" class="pp">Because A is the centre of the circle BCD, AC is equal to AB (Def. xxxii.).</div>
+        <script>
+            declareText(1, 1, 5, ['AB', 'AC', 'D']);
+        </script>
 
-        <div class="pp line6">Again, because B is the centre of the circle ACE, BC is equal to BA.</div>
+        <div id="prop1_1_6" class="pp">Again, because B is the centre of the circle ACE, BC is equal to BA.</div>
+        <script>
+            declareText(1, 1, 6, ['BC', 'AB', 'E']);
+        </script>
 
-        <div class="pp line7">
+        <div id="prop1_1_7" class="pp">
             Hence we have proved.<br/>
             AC = AB;<br/>
             and BC = AB
         </div>
+        <script>
+            declareText(1, 1, 7, ['AB', 'BC', 'AC']);
+        </script>
 
-        <div class="pp line8">
+        <div id="prop1_1_8" class="pp">
             But things which are equal to the same are equal to one another (Axiom i.);
             therefore AC is equal to BC;
         </div>
+        <script>
+            declareText(1, 1, 8, ['AB', 'BC', 'AC']);
+        </script>
 
-        <div class="pp line9">
+        <div id="prop1_1_9" class="pp">
             therefore the three lines AB, BC, CA are equal
             to one another. Hence the triangle ABC is equilateral (Def. xxi.); and it is
             described on the given line AB, which was required to be done.
         </div>
+        <script>
+            declareText(1, 1, 9, ['AB', 'BC', 'AC']);
+        </script>
     </div>
 </td>
 <td>
-    <canvas id="canvas1"></canvas>
+    <canvas id="canvas1_1"></canvas>
+    <script>
+        declareDiagram('canvas1_1', 'xyz');
+    </script>
 </td>
 </tr></table>
 
