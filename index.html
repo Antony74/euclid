@@ -16,20 +16,24 @@
         
             declareProposition('xyz', new function()
             {
+                var _A = createMoveablePoint(110, 150, 'left');
+                var _B = createMoveablePoint(190, 150, 'right');
+                var _C = createPoint('top');
+
                 this.elms =
                 {
-                    A:  createMoveablePoint(110, 150, 'left'),
-                    B:  createMoveablePoint(190, 150, 'right'),
-//                    C:  createPoint('top'),
-//                    AB: createLine(elms.A, elms.B),
-//                    BC: createLine(elms.B, elms.C),
-//                    AC: createLine(elms.A, elms.C),
-//                    D:  createCircle(elms.A, 80, 'bottom'),
-//                    E:  createCircle(elms.B, 80, 'bottom'),
+                    A:  _A,
+                    B:  _B,
+                    C:  _C,
+                    AB: createLine(_A, _B),
+                    BC: createLine(_B, _C),
+                    AC: createLine(_A, _C),
+                    D:  createCircle(_A, 80, 'bottom'),
+                    E:  createCircle(_B, 80, 'bottom'),
                 };
                 this.update = function()
                 {
-//                    updateEquilateral(this.elms.A, this.elms.B, this.elms.C, 'left');
+                    updateEquilateral(this.elms.A, this.elms.B, this.elms.C, 'left');
                 };
             });
         </script>

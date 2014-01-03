@@ -40,13 +40,30 @@ var createMoveablePoint = function(_x, _y, _align)
         this.draw = function(processing)
         {
             processing.noStroke();
-            processing.fill(255, 0, 0, 200);
+
+            if (this.moveable == true)
+                processing.fill(255, 0, 0, 200);
+            else
+                processing.fill(0, 255, 0, 200);
+
             processing.rect(this.x, this.y, 10, 10);
 
             processing.fill(0);
-//            var adjustment = this.alignTop ? -8 : 18;
+
+            var xAdj = -5;
+            var yAdj = 5;
+
+            if (this.align == 'left')
+                xAdj = -13;
+            else if (this.align == 'right')
+                xAdj = 6;
+            else if (this.align == 'top')
+                yAdj = -8;
+            else
+                yAdj = 18;
+
             var adjustment = 18;
-            processing.text(this.name, this.x - 5, this.y + adjustment);
+            processing.text(this.name, this.x + xAdj, this.y + yAdj);
         };
     }
 
@@ -58,6 +75,77 @@ var createPoint = function(_align)
     var point = createMoveablePoint(0, 0, _align);
     point.moveable = false;
     return point;
+}
+
+var createLine = function(_pt1, _pt2)
+{
+    var line =
+    {
+        'pt1': _pt1,
+        'pt2': _pt2,
+        'selected': false,
+        'moveable': false,
+        'draw': function(processing)
+        {
+            if (this.selected)
+            {
+                processing.strokeWeight(3);
+            }
+            else
+            {
+                processing.strokeWeight(1);
+            }
+
+            processing.stroke(0);
+            processing.line(this.pt1.x, this.pt1.y, this.pt2.x, this.pt2.y);
+        },
+    };
+    return line;
+}
+
+var createCircle = function(_pt, _radius, _align)
+{
+    var circle =
+    {
+        'pt': _pt,
+        'radius': _radius,
+        'align': _align,
+        'selected': false,
+        'moveable': false,
+        'draw': function(processing)
+        {
+            if (this.selected)
+            {
+                processing.strokeWeight(3);
+            }
+            else
+            {
+                processing.strokeWeight(1);
+            }
+
+            processing.noFill();
+            processing.stroke(0);
+            processing.ellipse(this.pt.x, this.pt.y, this.radius * 2.0, this.radius * 2.0);
+
+            processing.fill(0);
+            processing.text(this.name, this.pt.x - 5, this.pt.y + this.radius + 12.0);
+        },
+    };
+    return circle;
+}
+
+var updateEquilateral = function(pt1, pt2, pt3, align)
+{
+    var distx = pt2.x - pt1.x;
+    var disty = pt2.y - pt1.y;
+    dist = Math.sqrt((distx * distx) + (disty * disty));
+    var angle = Math.atan2(disty, distx);
+    if (align == 'right')
+        angle += 1.0 * Math.PI / 3.0;
+    else
+        angle -= 1.0 * Math.PI / 3.0;
+    pt3.x = pt1.x + (dist * Math.cos(angle));
+    pt3.y = pt1.y + (dist * Math.sin(angle));
 }
 
 $(document).ready(function()
@@ -79,13 +167,24 @@ $(document).ready(function()
             {
                 processing.background(200);
                 
-                var elms = propositions[diagram.sProp].elms;
+                var prop = propositions[diagram.sProp];
+                var elms = prop.elms;
                 
-                for(var sElm in elms)
+                prop.update();
+
+                for (var nPass = 0; nPass < 2; ++nPass)
                 {
-                    var elm = elms[sElm];
-                    elm.name = sElm;
-                    elm.draw(processing);
+                    for(var sElm in elms)
+                    {
+                        var elm = elms[sElm];
+                        elm.name = sElm;
+
+                        if (  (nPass == 0 && elm.constructor.name != "Point")
+                        ||    (nPass == 1 && elm.constructor.name == "Point")  )
+                        {
+                            elm.draw(processing);
+                        }
+                    }
                 }
                 
                 processing.noLoop();
@@ -95,59 +194,6 @@ $(document).ready(function()
 });
 
 /*
-        function createLine(_pt1, _pt2)
-        {
-            var line =
-            {
-                'pt1': _pt1,
-                'pt2': _pt2,
-                'selected': false,
-                'draw': function()
-                {
-                    if (this.selected)
-                    {
-                        processing.strokeWeight(3);
-                    }
-                    else
-                    {
-                        processing.strokeWeight(1);
-                    }
-
-                    processing.stroke(0);
-                    processing.line(this.pt1.x, this.pt1.y, this.pt2.x, this.pt2.y);
-                },
-            };
-            return line;
-        }
-
-        function createCircle(_pt, _radius)
-        {
-            var circle =
-            {
-                'pt': _pt,
-                'radius': _radius,
-                'selected': false,
-                'draw': function()
-                {
-                    if (this.selected)
-                    {
-                        processing.strokeWeight(3);
-                    }
-                    else
-                    {
-                        processing.strokeWeight(1);
-                    }
-
-                    processing.noFill();
-                    processing.stroke(0);
-                    processing.ellipse(this.pt.x, this.pt.y, this.radius * 2.0, this.radius * 2.0);
-
-                    processing.fill(0);
-                    processing.text(this.name, this.pt.x - 5, this.pt.y + this.radius + 10.0);
-                },
-            };
-            return circle;
-        }
 
         var myAngle = -1.0 * Math.PI / 3.0;
 
