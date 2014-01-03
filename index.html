@@ -10,11 +10,13 @@
 
 <table><tr>
 <td>
-    <div id="prop1_1">
+    <div id="prop1_1" class="prop">
     
+        <h3 class="propTitle">Prop 1: On a given finite right line (AB) to construct an equilateral triangle.</h3>
+
         <script>
         
-            declareProposition('xyz', new function()
+            declareProposition('#prop1_1', new function()
             {
                 var _A = createMoveablePoint(110, 150, 'left');
                 var _B = createMoveablePoint(190, 150, 'right');
@@ -34,11 +36,11 @@
                 this.update = function()
                 {
                     updateEquilateral(this.elms.A, this.elms.B, this.elms.C, 'left');
+                    this.elms.D.radius = dist(this.elms.A, this.elms.B);
+                    this.elms.E.radius = dist(this.elms.A, this.elms.B);
                 };
             });
         </script>
-    
-        <h3>Prop 1: On a given finite right line (AB) to construct an equilateral triangle.</h3>
 
         <div id="prop1_1_1" class="pp">With A as centre, and AB as radius, describe the circle BCD (Post. iii.).</div>
         <script>
@@ -100,7 +102,7 @@
 <td>
     <canvas id="canvas1_1"></canvas>
     <script>
-        declareDiagram('canvas1_1', 'xyz');
+        declareDiagram('canvas1_1', '#prop1_1');
     </script>
 </td>
 </tr></table>

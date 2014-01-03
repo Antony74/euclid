@@ -1,6 +1,6 @@
 
 var propositions = {};
-var arrText = [];
+var arrText = {};
 var arrDiagram = [];
 
 var declareProposition = function(sProp, objProp)
@@ -10,13 +10,23 @@ var declareProposition = function(sProp, objProp)
 
 var declareText = function(_nBook, _nProp, _nLine, _arrElms)
 {
-    arrText.push(
+    var textObj =
     {
         'nBook':   _nBook,
         'nProp':   _nProp,
         'nLine':   _nLine,
         'arrElms': _arrElms,
-    });
+        'getPropID': function()
+        {
+            return "#prop" + this.nBook.toString() + "_" + this.nProp.toString();
+        },
+        'getTextID': function()
+        {
+            return this.getPropID() + "_" + _nLine.toString();
+        },
+    };
+
+    arrText[textObj.getTextID()] = textObj;
 }
 
 var declareDiagram = function(_sID, _sProp)
@@ -65,6 +75,19 @@ var createMoveablePoint = function(_x, _y, _align)
             var adjustment = 18;
             processing.text(this.name, this.x + xAdj, this.y + yAdj);
         };
+        this.hitTest = function(_x, _y)
+        {
+            var radius = 5;
+            if (this.x >= _x - radius && this.x <= _x + radius
+            &&  this.y >= _y - radius && this.y <= _y + radius)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     return new Point;
@@ -134,18 +157,25 @@ var createCircle = function(_pt, _radius, _align)
     return circle;
 }
 
+var dist = function(pt1, pt2)
+{
+    var distx = pt2.x - pt1.x;
+    var disty = pt2.y - pt1.y;
+    return Math.sqrt((distx * distx) + (disty * disty));
+}
+
 var updateEquilateral = function(pt1, pt2, pt3, align)
 {
     var distx = pt2.x - pt1.x;
     var disty = pt2.y - pt1.y;
-    dist = Math.sqrt((distx * distx) + (disty * disty));
+    var dist12 = dist(pt1, pt2);
     var angle = Math.atan2(disty, distx);
     if (align == 'right')
         angle += 1.0 * Math.PI / 3.0;
     else
         angle -= 1.0 * Math.PI / 3.0;
-    pt3.x = pt1.x + (dist * Math.cos(angle));
-    pt3.y = pt1.y + (dist * Math.sin(angle));
+    pt3.x = pt1.x + (dist12 * Math.cos(angle));
+    pt3.y = pt1.y + (dist12 * Math.sin(angle));
 }
 
 $(document).ready(function()
@@ -159,10 +189,78 @@ $(document).ready(function()
         {
             processing.setup = function()
             {
-                processing.size(300,300);
+                processing.size(300, 300);
                 processing.rectMode(processing.CENTER);
+
+                for (var sProp in propositions)
+                {
+                    var _elms = propositions[sProp].elms;
+
+                    $(sProp).bind('click', function(event)
+                    {
+                        var bSelected = $(event.target).hasClass('selected');
+
+                        // De-select all text
+                        $(this).children('div').removeClass('selected');
+
+                        // Maybe select some text
+                        if (bSelected == false && $(event.target).hasClass('pp'))
+                        {
+                            $(event.target).addClass('selected');
+                        }
+
+                        processing.loop();                
+                    });
+                }
+
+                for (var nText in arrText)
+                {
+                    var textObj = arrText[nText];
+
+                    $(textObj.getTextID()).bind('click', function(event)
+                    {
+                        var sID = '#' + $(event.target).attr('id');
+
+                        var _textObj = arrText[sID];
+                        var _elms = propositions[_textObj.getPropID()].elms;
+
+                        // De-select all diagram items
+                        for (var sElm in _elms)
+                        {
+                            _elms[sElm].selected = false;
+                        }
+
+                        // Select any diagram items associated with this text
+                        for(var nElm in _textObj.arrElms)
+                        {
+                            var sElm = _textObj.arrElms[nElm];
+                            _elms[sElm].selected = true;
+                        }
+
+                        processing.loop();                
+                    });
+                }
+
             }
             
+            processing.mouseDragged = function()
+            {
+                var prop = propositions[diagram.sProp];
+                var elms = prop.elms;
+
+                for(var sElm in elms)
+                {
+                    var elm = elms[sElm];
+                    if (elm.moveable && elm.hitTest(processing.pmouseX, processing.pmouseY))
+                    {
+                        elm.x = processing.mouseX;
+                        elm.y = processing.mouseY;
+                        processing.loop();
+                        break;
+                    }
+                }
+            }
+
             processing.draw = function()
             {
                 processing.background(200);
