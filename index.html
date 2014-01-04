@@ -18,7 +18,7 @@
 
 <table>
 <tr>
-<td valign="top">
+<td>
     <div id="prop1_1" class="prop">
     
         <div class="propTitle" id="prop1_1_0">
@@ -32,20 +32,16 @@
         
             declareProposition('#prop1_1', new function()
             {
-                var _A = createMoveablePoint(110, 150, 'left');
-                var _B = createMoveablePoint(190, 150, 'right');
-                var _C = createPoint('top');
-
-                this.elms =
+                this.elms = new function()
                 {
-                    A:  _A,
-                    B:  _B,
-                    C:  _C,
-                    AB: createLine(_A, _B),
-                    BC: createLine(_B, _C),
-                    AC: createLine(_A, _C),
-                    D:  createCircle(_A, 80, 'bottom'),
-                    E:  createCircle(_B, 80, 'bottom'),
+                    this.A  = createMoveablePoint(110, 150, 'left');
+                    this.B  = createMoveablePoint(190, 150, 'right');
+                    this.C  = createPoint('top');
+                    this.AB = createLine(this.A, this.B);
+                    this.BC = createLine(this.B, this.C);
+                    this.AC = createLine(this.A, this.C);
+                    this.D  = createCircle(this.A, 'bottom');
+                    this.E  = createCircle(this.B, 'bottom');
                 };
                 this.update = function()
                 {
@@ -58,7 +54,7 @@
         </script>
 
         <div id="prop1_1_1" class="pp">
-            With A as centre, and AB as radius, describe the circle BCD (Post. iii.).
+            <b>Sol.</b>-With A as centre, and AB as radius, describe the circle BCD (Post. iii.).
         </div>
         <script>
             declareText(1, 1, 1, ['D', 'AB']);
@@ -86,7 +82,7 @@
         </script>
 
         <div id="prop1_1_5" class="pp">
-            Because A is the centre of the circle BCD, AC is equal to AB (Def. xxxii.).
+            <b>Dem.</b>-Because A is the centre of the circle BCD, AC is equal to AB (Def. xxxii.).
         </div>
         <script>
             declareText(1, 1, 5, ['AB', 'AC', 'D']);
@@ -134,102 +130,154 @@
 </td>
 </tr>
 <tr>
-<td valign="top">
+<td>
     <div id="prop1_2" class="prop">
         <div class="propTitle" id="prop1_2_0">
             Prop 2: From a given point (A) to draw a right line equal to a given finite right line (BC).
         </div>
-        <!--script>
-            declareText(1, 1, 0, ['AB']);
-        </script-->
+        <script>
+            declareText(1, 2, 0, ['BC']);
+        </script>
 
         <script>
         
             declareProposition('#prop1_2', new function()
             {
-                var _A = createMoveablePoint(190, 150, 'left');
-                var _B = createMoveablePoint(150, 100, 'right');
-                var _C = createMoveablePoint(100, 100, 'top');
-
-                this.elms =
+                this.elms = new function()
                 {
-                    A:  _A,
-                    B:  _B,
-                    C:  _C,
-                    AB: createLine(_A, _B),
-                    BC: createLine(_B, _C),
-                    AC: createLine(_A, _C),
-                    D:  createCircle(_A, 80, 'bottom'),
-                    E:  createCircle(_B, 80, 'bottom'),
+                    this.A  = createMoveablePoint(200, 170, 'right');
+                    this.B  = createMoveablePoint(165, 200, 'right');
+                    this.C  = createMoveablePoint( 85, 200, 'top');
+                    this.D  = createPoint('top');
+                    this.E  = createPoint('bottom');
+                    this.F  = createPoint('right');
+                    this.AB = createLine(this.A, this.B);
+                    this.BC = createLine(this.B, this.C);
+                    this.AD = createLine(this.A, this.D);
+                    this.BD = createLine(this.B, this.D);
+                    this.BE = createLine(this.B, this.E);
+                    this.AF = createLine(this.A, this.F);
+                    this.H  = createCircle(this.B, 'top');
+                    this.G  = createCircle(this.D, 'top');
                 };
                 this.update = function()
                 {
-                    updateEquilateral(this.elms.A, this.elms.B, this.elms.C, 'left');
-                    this.elms.D.radius = dist(this.elms.A, this.elms.B);
-                    this.elms.E.radius = dist(this.elms.A, this.elms.B);
+                    updateEquilateral(this.elms.A, this.elms.B, this.elms.D, 'right');
+                    this.elms.H.radius = dist(this.elms.B, this.elms.C);
+                    this.elms.G.radius = extendLineByAmount(this.elms.D, this.elms.B, this.elms.E, this.elms.H.radius);
+                    extendLineToAmount(this.elms.D, this.elms.A, this.elms.F, this.elms.G.radius);
                 };
             });
             
         </script>
 
-        <div id="prop_1_2_1" class="pp">
-            Join AB (Post. i.);
+        <div id="prop1_2_1" class="pp">
+            <b>Sol.</b>-Join AB (Post. i.);
         </div>
+        <script>
+            declareText(1, 2, 1, ['AB']);
+        </script>
 
-        <div id="prop_1_2_2" class="pp">
+        <div id="prop1_2_2" class="pp">
             on AB describe the equilateral triangle ABD [i.].
         </div>
+        <script>
+            declareText(1, 2, 2, ['AB', 'BD', 'AD']);
+        </script>
 
-        <div id="prop_1_2_3" class="pp">
+        <div id="prop1_2_3" class="pp">
             With B as centre, and BC as radius, describe the circle ECH (Post iii.).
         </div>
+        <script>
+            declareText(1, 2, 3, ['BC', 'H']);
+        </script>
 
-        <div id="prop_1_2_4" class="pp">
+        <div id="prop1_2_4" class="pp">
             Produce DB to meet the circle ECH in E (Post. ii.).
         </div>
+        <script>
+            declareText(1, 2, 4, ['BD', 'BE', 'H']);
+        </script>
 
-        <div id="prop_1_2_5" class="pp">
+        <div id="prop1_2_5" class="pp">
             With D as centre, and DE as radius, describe the circle EFG (Post. iii.).
         </div>
+        <script>
+            declareText(1, 2, 5, ['BD', 'BE', 'G']);
+        </script>
 
-        <div id="prop_1_2_6" class="pp">
-            Produce DA to meet this circle in F. AF is equal to BC.
+        <div id="prop1_2_6" class="pp">
+            Produce DA to meet this circle in F.
         </div>
+        <script>
+            declareText(1, 2, 6, ['AD', 'AF', 'G']);
+        </script>
 
-        <div id="prop_1_2_7" class="pp">
-            Because D is the centre of the circle EFG, DF is equal to DE (Def. xxxii.).
+        <div id="prop1_2_7" class="pp">
+            AF is equal to BC.
         </div>
+        <script>
+            declareText(1, 2, 7, ['AF', 'BC']);
+        </script>
 
-        <div id="prop_1_2_8" class="pp">
+        <div id="prop1_2_8" class="pp">
+            <b>Dem.</b>-Because D is the centre of the circle EFG, DF is equal to DE (Def. xxxii.).
+        </div>
+        <script>
+            declareText(1, 2, 8, ['G', 'AD', 'AF', 'BD', 'BE']);
+        </script>
+
+        <div id="prop1_2_9" class="pp">
             And because DAB is an equilateral triangle, DA is equal to DB (Def. xxi.).
         </div>
+        <script>
+            declareText(1, 2, 9, ['AD', 'AB']);
+        </script>
 
-        <div id="prop_1_2_9" class="pp">
+        <div id="prop1_2_10" class="pp">
             Hence we have<br />
             DF = DE;<br />
             and DA = DB;
         </div>
+        <script>
+            declareText(1, 2, 10, ['AD', 'AF', 'BD', 'BE']);
+        </script>
 
-        <div id="prop_1_2_10" class="pp">
+        <div id="prop1_2_11" class="pp">
             and taking the latter from the former, the remainder AF is equal to the remainder BE (Axiom iii.).
         </div>
+        <script>
+            declareText(1, 2, 11, ['AF', 'BE']);
+        </script>
 
-        <div id="prop_1_2_11" class="pp">
+        <div id="prop1_2_12" class="pp">
             Again, because B is the centre of the circle ECH, BC is equal to BE;
         </div>
+        <script>
+            declareText(1, 2, 12, ['BC', 'BE', 'H']);
+        </script>
 
-        <div id="prop_1_2_12" class="pp">
+        <div id="prop1_2_13" class="pp">
             and we have proved that AF is equal to BE; and things which are equal to the
             same thing are equal to one another (Axiom i.).
         </div>
+        <script>
+            declareText(1, 2, 13, ['AF', 'BE']);
+        </script>
 
-        <div id="prop_1_2_13" class="pp">
+        <div id="prop1_2_14" class="pp">
             Hence AF is equal to BC.
         </div>
+        <script>
+            declareText(1, 2, 14, ['AF', 'BC']);
+        </script>
 
-        <div id="prop_1_2_14" class="pp">
+        <div id="prop1_2_15" class="pp">
             Therefore from the given point A the line AF has been drawn equal to BC.
         </div>
+        <script>
+            declareText(1, 2, 15, ['AF', 'BC']);
+        </script>
 
 </td>
 <td>

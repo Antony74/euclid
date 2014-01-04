@@ -47,33 +47,36 @@ var createMoveablePoint = function(_x, _y, _align)
         this.align = _align;
         this.selected = false;
         this.moveable = true;
+        this.visible = true;
         
         this.draw = function(processing)
         {
             processing.noStroke();
 
-            if (this.moveable == true)
-                processing.fill(255, 0, 0, 200);
-            else
-                processing.fill(0, 255, 0, 200);
+            if (this.visible == true)
+            {
+                if (this.moveable == true)
+                    processing.fill(255, 0, 0, 200);
+                else
+                    processing.fill(0, 255, 0, 200);
 
-            processing.rect(this.x, this.y, 10, 10);
+                processing.rect(this.x, this.y, 10, 10);
+            }
 
             processing.fill(0);
 
-            var xAdj = -5;
-            var yAdj = 5;
+            var xAdj = this.visible ? -5 : -5;
+            var yAdj = this.visible ?  5 : 10;
 
             if (this.align == 'left')
-                xAdj = -13;
+                xAdj += -8;
             else if (this.align == 'right')
-                xAdj = 6;
+                xAdj += 11;
             else if (this.align == 'top')
-                yAdj = -8;
+                yAdj += -13;
             else
-                yAdj = 18;
+                yAdj += 13;
 
-            var adjustment = 18;
             processing.text(this.name, this.x + xAdj, this.y + yAdj);
         };
 
@@ -99,6 +102,14 @@ var createPoint = function(_align)
 {
     var point = createMoveablePoint(0, 0, _align);
     point.moveable = false;
+    return point;
+}
+
+var createLabelPoint = function(_align)
+{
+    var point = createMoveablePoint(0, 0, _align);
+    point.moveable = false;
+    point.visible = false;
     return point;
 }
 
@@ -130,12 +141,12 @@ var createLine = function(_pt1, _pt2)
     return line;
 }
 
-var createCircle = function(_pt, _radius, _align)
+var createCircle = function(_pt, _align)
 {
     var circle =
     {
         'pt': _pt,
-        'radius': _radius,
+        'radius': 10.0,
         'align': _align,
         'selected': false,
         'moveable': false,
@@ -156,7 +167,10 @@ var createCircle = function(_pt, _radius, _align)
             processing.ellipse(this.pt.x, this.pt.y, this.radius * 2.0, this.radius * 2.0);
 
             processing.fill(0);
-            processing.text(this.name, this.pt.x - 5, this.pt.y + this.radius + 12.0);
+            if (this.align == 'top')
+                processing.text(this.name, this.pt.x - 5, this.pt.y - this.radius - 3.0);
+            else
+                processing.text(this.name, this.pt.x - 5, this.pt.y + this.radius + 12.0);
         },
     };
 
@@ -182,6 +196,32 @@ var updateEquilateral = function(pt1, pt2, pt3, align)
         angle -= 1.0 * Math.PI / 3.0;
     pt3.x = pt1.x + (dist12 * Math.cos(angle));
     pt3.y = pt1.y + (dist12 * Math.sin(angle));
+}
+
+var extendLine = function(pt1, pt2, pt3, amount, extraFactor)
+{
+    var distx = pt2.x - pt1.x;
+    var disty = pt2.y - pt1.y;
+    var dist12 = dist(pt1, pt2);
+
+    if (dist12 == 0.0) return;
+    
+    var factor = extraFactor + (amount / dist12);
+
+    pt3.x = pt1.x + (distx * factor);
+    pt3.y = pt1.y + (disty * factor);
+    
+    return dist12 * factor;
+}
+
+var extendLineByAmount = function(pt1, pt2, pt3, amount)
+{
+    return extendLine(pt1, pt2, pt3, amount, 1.0);
+}
+
+var extendLineToAmount = function(pt1, pt2, pt3, amount)
+{
+    return extendLine(pt1, pt2, pt3, amount, 0.0);
 }
 
 $(document).ready(function()
