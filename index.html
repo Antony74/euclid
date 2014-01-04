@@ -16,7 +16,8 @@
 <br />
 <br />
 
-<table><tr>
+<table>
+<tr>
 <td valign="top">
     <div id="prop1_1" class="prop">
     
@@ -131,7 +132,115 @@
         declareDiagram('canvas1_1', '#prop1_1');
     </script>
 </td>
-</tr></table>
+</tr>
+<tr>
+<td valign="top">
+    <div id="prop1_2" class="prop">
+        <div class="propTitle" id="prop1_2_0">
+            Prop 2: From a given point (A) to draw a right line equal to a given finite right line (BC).
+        </div>
+        <!--script>
+            declareText(1, 1, 0, ['AB']);
+        </script-->
+
+        <script>
+        
+            declareProposition('#prop1_2', new function()
+            {
+                var _A = createMoveablePoint(190, 150, 'left');
+                var _B = createMoveablePoint(150, 100, 'right');
+                var _C = createMoveablePoint(100, 100, 'top');
+
+                this.elms =
+                {
+                    A:  _A,
+                    B:  _B,
+                    C:  _C,
+                    AB: createLine(_A, _B),
+                    BC: createLine(_B, _C),
+                    AC: createLine(_A, _C),
+                    D:  createCircle(_A, 80, 'bottom'),
+                    E:  createCircle(_B, 80, 'bottom'),
+                };
+                this.update = function()
+                {
+                    updateEquilateral(this.elms.A, this.elms.B, this.elms.C, 'left');
+                    this.elms.D.radius = dist(this.elms.A, this.elms.B);
+                    this.elms.E.radius = dist(this.elms.A, this.elms.B);
+                };
+            });
+            
+        </script>
+
+        <div id="prop_1_2_1" class="pp">
+            Join AB (Post. i.);
+        </div>
+
+        <div id="prop_1_2_2" class="pp">
+            on AB describe the equilateral triangle ABD [i.].
+        </div>
+
+        <div id="prop_1_2_3" class="pp">
+            With B as centre, and BC as radius, describe the circle ECH (Post iii.).
+        </div>
+
+        <div id="prop_1_2_4" class="pp">
+            Produce DB to meet the circle ECH in E (Post. ii.).
+        </div>
+
+        <div id="prop_1_2_5" class="pp">
+            With D as centre, and DE as radius, describe the circle EFG (Post. iii.).
+        </div>
+
+        <div id="prop_1_2_6" class="pp">
+            Produce DA to meet this circle in F. AF is equal to BC.
+        </div>
+
+        <div id="prop_1_2_7" class="pp">
+            Because D is the centre of the circle EFG, DF is equal to DE (Def. xxxii.).
+        </div>
+
+        <div id="prop_1_2_8" class="pp">
+            And because DAB is an equilateral triangle, DA is equal to DB (Def. xxi.).
+        </div>
+
+        <div id="prop_1_2_9" class="pp">
+            Hence we have<br />
+            DF = DE;<br />
+            and DA = DB;
+        </div>
+
+        <div id="prop_1_2_10" class="pp">
+            and taking the latter from the former, the remainder AF is equal to the remainder BE (Axiom iii.).
+        </div>
+
+        <div id="prop_1_2_11" class="pp">
+            Again, because B is the centre of the circle ECH, BC is equal to BE;
+        </div>
+
+        <div id="prop_1_2_12" class="pp">
+            and we have proved that AF is equal to BE; and things which are equal to the
+            same thing are equal to one another (Axiom i.).
+        </div>
+
+        <div id="prop_1_2_13" class="pp">
+            Hence AF is equal to BC.
+        </div>
+
+        <div id="prop_1_2_14" class="pp">
+            Therefore from the given point A the line AF has been drawn equal to BC.
+        </div>
+
+</td>
+<td>
+    <canvas id="canvas1_2"></canvas>
+    <script>
+        declareDiagram('canvas1_2', '#prop1_2');
+    </script>
+</td>
+</td>
+</tr>
+</table>
 
 <br/>
 <br/>

@@ -3,9 +3,9 @@ var propositionObjects = {};
 var textObjects = {};
 var diagramObjects = {};
 
-var declareProposition = function(sProp, objProp)
+var declareProposition = function(sPropID, objProp)
 {
-    propositionObjects[sProp] = objProp;
+    propositionObjects[sPropID] = objProp;
 }
 
 var declareText = function(_nBook, _nProp, _nLine, _arrElms)
@@ -29,12 +29,12 @@ var declareText = function(_nBook, _nProp, _nLine, _arrElms)
     textObjects[textObj.getTextID()] = textObj;
 }
 
-var declareDiagram = function(_sID, _sProp)
+var declareDiagram = function(_sDiagramID, _sPropID)
 {
-    diagramObjects[_sID] =
+    diagramObjects[_sDiagramID] =
     {
-        'sID':   _sID,
-        'sProp': _sProp,
+        'sDiagramID':   _sDiagramID,
+        'sPropID': _sPropID,
     };
 }
 
@@ -186,25 +186,24 @@ var updateEquilateral = function(pt1, pt2, pt3, align)
 
 $(document).ready(function()
 {
-    for (var sProp in propositionObjects)
+    for (var sPropID in propositionObjects)
     {
-        $(sProp + ">.pp").addClass("hidden");
-        $(sProp + ">.propTitle").after("[<a class='hideButton' href='" + sProp + "'>show</a>]");
+        $(sPropID + ">.pp").addClass("hidden");
+        $(sPropID + ">.propTitle").after("[<a class='hideButton' href='" + sPropID + "'>show</a>]");
     }
 
     $('.hideButton').click(function(event)
     {
-        var sProp = $(event.target).attr('href');
-        console.log(sProp);
+        var sPropID = $(event.target).attr('href');
     
-        if ($(sProp + ">.pp").hasClass("hidden"))
+        if ($(sPropID + ">.pp").hasClass("hidden"))
         {
-            $(sProp + ">.pp").removeClass("hidden");
+            $(sPropID + ">.pp").removeClass("hidden");
             $(event.target).html("hide");
         }
         else
         {
-            $(sProp + ">.pp").addClass("hidden");
+            $(sPropID + ">.pp").addClass("hidden");
             $(event.target).html("show");
         }
         return false;
@@ -213,16 +212,18 @@ $(document).ready(function()
     for (var nDiagram in diagramObjects)
     {
         var diagram = diagramObjects[nDiagram];
-        var canvas = document.getElementById(diagram.sID);
+        var canvas = document.getElementById(diagram.sDiagramID);
 
         diagram.processing = new Processing(canvas, function(processing)
         {
+            processing.sPropID = diagram.sPropID;
+        
             processing.setup = function()
             {
                 processing.size(300, 300);
                 processing.rectMode(processing.CENTER);
 
-                $(diagram.sProp).bind('click', function(event)
+                $(processing.sPropID).click(function(event)
                 {
                     var bSelected = $(event.target).hasClass('selected');
 
@@ -278,7 +279,7 @@ $(document).ready(function()
             
             processing.mouseDragged = function()
             {
-                var prop = propositionObjects[diagram.sProp];
+                var prop = propositionObjects[processing.sPropID];
                 var elms = prop.elms;
 
                 for(var sElm in elms)
@@ -298,7 +299,7 @@ $(document).ready(function()
             {
                 processing.background(200);
                 
-                var prop = propositionObjects[diagram.sProp];
+                var prop = propositionObjects[processing.sPropID];
                 var elms = prop.elms;
                 
                 prop.update();
