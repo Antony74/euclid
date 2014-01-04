@@ -1,6 +1,6 @@
 
 var propositions = {};
-var arrText = {};
+var textObjects = {};
 var arrDiagram = [];
 
 var declareProposition = function(sProp, objProp)
@@ -26,7 +26,7 @@ var declareText = function(_nBook, _nProp, _nLine, _arrElms)
         },
     };
 
-    arrText[textObj.getTextID()] = textObj;
+    textObjects[textObj.getTextID()] = textObj;
 }
 
 var declareDiagram = function(_sID, _sProp)
@@ -47,6 +47,7 @@ var createMoveablePoint = function(_x, _y, _align)
         this.align = _align;
         this.selected = false;
         this.moveable = true;
+        
         this.draw = function(processing)
         {
             processing.noStroke();
@@ -75,6 +76,7 @@ var createMoveablePoint = function(_x, _y, _align)
             var adjustment = 18;
             processing.text(this.name, this.x + xAdj, this.y + yAdj);
         };
+
         this.hitTest = function(_x, _y)
         {
             var radius = 5;
@@ -108,6 +110,7 @@ var createLine = function(_pt1, _pt2)
         'pt2': _pt2,
         'selected': false,
         'moveable': false,
+
         'draw': function(processing)
         {
             if (this.selected)
@@ -123,6 +126,7 @@ var createLine = function(_pt1, _pt2)
             processing.line(this.pt1.x, this.pt1.y, this.pt2.x, this.pt2.y);
         },
     };
+
     return line;
 }
 
@@ -135,6 +139,7 @@ var createCircle = function(_pt, _radius, _align)
         'align': _align,
         'selected': false,
         'moveable': false,
+
         'draw': function(processing)
         {
             if (this.selected)
@@ -154,6 +159,7 @@ var createCircle = function(_pt, _radius, _align)
             processing.text(this.name, this.pt.x - 5, this.pt.y + this.radius + 12.0);
         },
     };
+
     return circle;
 }
 
@@ -194,47 +200,53 @@ $(document).ready(function()
 
                 for (var sProp in propositions)
                 {
-                    var _elms = propositions[sProp].elms;
-
                     $(sProp).bind('click', function(event)
                     {
                         var bSelected = $(event.target).hasClass('selected');
 
                         // De-select all text
+                        $(this).children('h3').removeClass('selected');
                         $(this).children('div').removeClass('selected');
 
                         // Maybe select some text
-                        if (bSelected == false && $(event.target).hasClass('pp'))
+                        if (bSelected == false)
                         {
-                            $(event.target).addClass('selected');
+                            if ($(event.target).hasClass('pp')
+                            ||  $(event.target).hasClass('propTitle'))
+                            {
+                                $(event.target).addClass('selected');
+                            }
                         }
-
+                        
                         processing.loop();                
                     });
                 }
 
-                for (var nText in arrText)
+                for (var nText in textObjects)
                 {
-                    var textObj = arrText[nText];
-
-                    $(textObj.getTextID()).bind('click', function(event)
+                    $(textObjects[nText].getTextID()).bind('click', function(event)
                     {
                         var sID = '#' + $(event.target).attr('id');
 
-                        var _textObj = arrText[sID];
-                        var _elms = propositions[_textObj.getPropID()].elms;
+                        var textObj = textObjects[sID];
+                        var elms = propositions[textObj.getPropID()].elms;
 
                         // De-select all diagram items
-                        for (var sElm in _elms)
+                        for (var sElm in elms)
                         {
-                            _elms[sElm].selected = false;
+                            elms[sElm].selected = false;
                         }
 
                         // Select any diagram items associated with this text
-                        for(var nElm in _textObj.arrElms)
-                        {
-                            var sElm = _textObj.arrElms[nElm];
-                            _elms[sElm].selected = true;
+                        var bSelected = $(event.target).hasClass('selected');
+
+                        if (bSelected == false) // Yes that does look the wrong way round,
+                        {                       // I guess the other 'click' function hasn't run yet.
+                            for(var nElm in textObj.arrElms)
+                            {
+                                var sElm = textObj.arrElms[nElm];
+                                elms[sElm].selected = true;
+                            }
                         }
 
                         processing.loop();                
@@ -291,66 +303,3 @@ $(document).ready(function()
     }
 });
 
-/*
-
-        var myAngle = -1.0 * Math.PI / 3.0;
-
-        var elms = {};
-        elms.AB = null;
-        elms.BC = null;
-        elms.AC = null;
-        elms.D = null;
-        elms.E = null;
-        elms.A = new Point(110, 150);
-        elms.B = new Point(190, 150);
-        elms.C = new Point(110 + (80*Math.cos(myAngle)), 150 + (80*Math.sin(myAngle)));
-        elms.C.alignTop = true;
-        elms.AB = createLine(elms.A, elms.B);
-        elms.BC = createLine(elms.B, elms.C);
-        elms.AC = createLine(elms.A, elms.C);
-        elms.D = createCircle(elms.A, 80);
-        elms.E = createCircle(elms.B, 80);
-
-        for(var elm in elms)
-        {
-            elms[elm].name = elm;
-        }
-
-        processing.setup = function()
-        {
-            processing.size(300,300);
-            processing.rectMode(processing.CENTER);
-
-            $('#prop1_1').bind('click', function(event)
-            {
-                var bSelected = $(event.target).hasClass('selected');
-
-                // De-select everything
-                $(this).children('div').removeClass('selected');
-
-                for(var elm in elms)
-                {
-                    elms[elm].selected = false;
-                }
-
-                // Maybe select something
-                if (bSelected == false && $(event.target).hasClass('pp'))
-                {
-                    $(event.target).addClass('selected');
-                }                
-            });
-        }
-        
-        processing.draw = function()
-        {
-            processing.background(200);
-
-            for(var elm in elms)
-            {
-                elms[elm].draw();
-            }
-        }
-    });
-
-});
-*/
