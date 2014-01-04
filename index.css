@@ -7,10 +7,19 @@
 }
 
 .propTitle {
+  font-weight: bold;
+  font-size:150%;
 }
 
 /* Proposition part*/
 .pp {
   padding: 10px 4px;
+}
+
+.hidden {
+	display:none;
+}
+
+.hideButton {
 }
 

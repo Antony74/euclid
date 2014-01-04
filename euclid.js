@@ -1,11 +1,11 @@
 
-var propositions = {};
+var propositionObjects = {};
 var textObjects = {};
-var arrDiagram = [];
+var diagramObjects = {};
 
 var declareProposition = function(sProp, objProp)
 {
-    propositions[sProp] = objProp;
+    propositionObjects[sProp] = objProp;
 }
 
 var declareText = function(_nBook, _nProp, _nLine, _arrElms)
@@ -31,11 +31,11 @@ var declareText = function(_nBook, _nProp, _nLine, _arrElms)
 
 var declareDiagram = function(_sID, _sProp)
 {
-    arrDiagram.push(
+    diagramObjects[_sID] =
     {
         'sID':   _sID,
         'sProp': _sProp,
-    });
+    };
 }
 
 var createMoveablePoint = function(_x, _y, _align)
@@ -186,11 +186,35 @@ var updateEquilateral = function(pt1, pt2, pt3, align)
 
 $(document).ready(function()
 {
-    for (var nDiagram in arrDiagram)
+    for (var sProp in propositionObjects)
     {
-        var diagram = arrDiagram[nDiagram];
+        $(sProp + ">.pp").addClass("hidden");
+        $(sProp + ">.propTitle").after("[<a class='hideButton' href='" + sProp + "'>show</a>]");
+    }
+
+    $('.hideButton').click(function(event)
+    {
+        var sProp = $(event.target).attr('href');
+        console.log(sProp);
     
+        if ($(sProp + ">.pp").hasClass("hidden"))
+        {
+            $(sProp + ">.pp").removeClass("hidden");
+            $(event.target).html("hide");
+        }
+        else
+        {
+            $(sProp + ">.pp").addClass("hidden");
+            $(event.target).html("show");
+        }
+        return false;
+    });
+
+    for (var nDiagram in diagramObjects)
+    {
+        var diagram = diagramObjects[nDiagram];
         var canvas = document.getElementById(diagram.sID);
+
         diagram.processing = new Processing(canvas, function(processing)
         {
             processing.setup = function()
@@ -198,29 +222,26 @@ $(document).ready(function()
                 processing.size(300, 300);
                 processing.rectMode(processing.CENTER);
 
-                for (var sProp in propositions)
+                $(diagram.sProp).bind('click', function(event)
                 {
-                    $(sProp).bind('click', function(event)
+                    var bSelected = $(event.target).hasClass('selected');
+
+                    // De-select all text
+                    $(this).children('.propTitle').removeClass('selected');
+                    $(this).children('.pp').removeClass('selected');
+
+                    // Maybe select some text
+                    if (bSelected == false)
                     {
-                        var bSelected = $(event.target).hasClass('selected');
-
-                        // De-select all text
-                        $(this).children('h3').removeClass('selected');
-                        $(this).children('div').removeClass('selected');
-
-                        // Maybe select some text
-                        if (bSelected == false)
+                        if ($(event.target).hasClass('pp')
+                        ||  $(event.target).hasClass('propTitle'))
                         {
-                            if ($(event.target).hasClass('pp')
-                            ||  $(event.target).hasClass('propTitle'))
-                            {
-                                $(event.target).addClass('selected');
-                            }
+                            $(event.target).addClass('selected');
                         }
-                        
-                        processing.loop();                
-                    });
-                }
+                    }
+                    
+                    processing.loop();                
+                });
 
                 for (var nText in textObjects)
                 {
@@ -229,7 +250,7 @@ $(document).ready(function()
                         var sID = '#' + $(event.target).attr('id');
 
                         var textObj = textObjects[sID];
-                        var elms = propositions[textObj.getPropID()].elms;
+                        var elms = propositionObjects[textObj.getPropID()].elms;
 
                         // De-select all diagram items
                         for (var sElm in elms)
@@ -257,7 +278,7 @@ $(document).ready(function()
             
             processing.mouseDragged = function()
             {
-                var prop = propositions[diagram.sProp];
+                var prop = propositionObjects[diagram.sProp];
                 var elms = prop.elms;
 
                 for(var sElm in elms)
@@ -277,7 +298,7 @@ $(document).ready(function()
             {
                 processing.background(200);
                 
-                var prop = propositions[diagram.sProp];
+                var prop = propositionObjects[diagram.sProp];
                 var elms = prop.elms;
                 
                 prop.update();
