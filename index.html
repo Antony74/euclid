@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Euclid's First Proposition</title>
+    <title>Euclid's Elements Book 1</title>
     <link rel="stylesheet" href="index.css" type="text/css" />
     <script src="jquery.js"></script>
     <script src="processing.js"></script>
@@ -13,12 +13,219 @@
     src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
     alt="Fork me on GitHub">
 </a>
-<br />
-<br />
+
+<h1>Euclid's Elements Book 1</h1>
 
 <table>
 <tr>
 <td>
+    <h2>
+        Definitions
+    </h2>
+    <div id="defn1_1" class="pp">
+        i. A point is that which has position but not dimensions.
+    </div>
+    <div id="defn1_2" class="pp">
+        ii. A line is length without breadth.
+    </div>
+    <div id="defn1_3" class="pp">
+        iii. The intersections of lines and their extremities are points.
+    </div>
+    <div id="defn1_4" class="pp">
+        iv. A line which lies evenly between its extreme points is called a straight or right line.
+    </div>
+    <div id="defn1_5" class="pp">
+        v. A surface is that which has length and breadth.
+    </div>
+    <div id="defn1_6" class="pp">
+        vi. When a surface is such that the right line joining any two arbitrary points in it lies
+        wholly in the surface, it is called a plane.
+    </div>
+    <div id="defn1_7" class="pp">
+        vii. Any combination of points, of lines, or of points and lines in a plane, is called a plane figure.
+        If a figure be formed of points only it is called a stigmatic figure; and if of right lines only,
+        a rectilineal figure.
+    </div>
+    <div id="defn1_8" class="pp">
+        viii. Points which lie on the same right line are called collinear points. A figure formed of
+        collinear points is called a row of points.
+    </div>
+    <div id="defn1_9" class="pp">
+        ix. The inclination of two right lines extending out from one point in different directions is
+        called a rectilineal angle.
+    </div>
+    <div id="defn1_10" class="pp">
+        x. The two lines are called the legs, and the point the vertex of the angle.
+    </div>
+    <div id="defn1_11" class="pp">
+        xi. Designation of Angles.  A particular angle in a figure is denoted by three letters,
+        as BAC of which the middle one, A, is at the vertex, and the other two along the legs.
+        The angle is then read BAC.
+    </div>
+    <div id="defn1_12" class="pp">
+        xii. The angle formed by joining two or more angles together is called their sum.
+    </div>
+    <div id="defn1_13" class="pp">
+        xiii. When the sum of two angles BAC, CAD is such that the legs BA, AD form one right line,
+        they are called supplements of each other.
+    </div>
+    <div id="defn1_14" class="pp">
+        xiv. When one line stands on another, and makes the adjacent angles at both sides of itself equal,
+        each of the angles is called a right angle, and the line which stands on the other is called a
+        perpendicular to it.  Hence a right angle is equal to its supplement.
+    </div>
+    <div id="defn1_15" class="pp">
+        xv. An acute angle is one which is less than a right angle.
+    </div>
+    <div id="defn1_16" class="pp">
+        xvi. An obtuse angle is one which is greater than a right angle.  The supplement of an acute
+        angle is obtuse, and conversely, the supplement of an obtuse angle is acute.
+    </div>
+    <div id="defn1_17" class="pp">
+        xvii. When the sum of two angles is a right angle, each is called the complement of the other.
+    </div>
+    <div id="defn1_18" class="pp">
+        xviii. Three or more right lines passing through the same point are called concurrent lines.
+    </div>
+    <div id="defn1_19" class="pp">
+        xix. A system of more than three concurrent lines is called a pencil of lines.
+        Each line of a pencil is called a ray, and the common point through which the rays pass is called the vertex.
+    </div>
+    <div id="defn1_20" class="pp">
+        xx. A triangle is a figure formed by three right lines joined end to end. The three lines are called its sides.
+    </div>
+    <div id="defn1_21" class="pp">
+        xxi. A triangle whose three sides are unequal is said to be scalene;  a triangle having two sides equal,
+        to be isosceles; and and having all its sides equal, to be equilateral.
+    </div>
+    <div id="defn1_22" class="pp">
+        xxii. A right-angled triangle is one that has one of its angles a right angle. The side which
+        subtends the right angle is called the hypotenuse.
+    </div>
+    <div id="defn1_23" class="pp">
+        xxiii. An obtuse-angled triangle is one that has one of its angles obtuse.
+    </div>
+    <div id="defn1_24" class="pp">
+        xxiv. An acute-angled triangle is one that has its three angles acute.
+    </div>
+    <div id="defn1_25" class="pp">
+        xxv. An exterior angle of a triangle is one that is formed by any side and the continuation of
+        another side.  Hence a triangle has six exterior angles; and also each exterior angle is the
+        supplement of the adjacent interior angle.
+    </div>
+    <div id="defn1_26" class="pp">
+        xxvi. A rectilineal figure bounded by more than three right lines is usually called a polygon.
+    </div>
+    <div id="defn1_27" class="pp">
+        xxvii. A polygon is said to be convex when it has no re-entrant angle.
+    </div>
+    <div id="defn1_28" class="pp">
+        xxviii. A polygon of four sides is called a quadrilateral.
+    </div>
+    <div id="defn1_29" class="pp">
+        xxix. A quadrilateral whose four sides are equal is called a lozenge.
+    </div>
+    <div id="defn1_30" class="pp">
+        xxx. A lozenge which has a right angle is called a square.
+    </div>
+    <div id="defn1_31" class="pp">
+        xxxi. A polygon which has five sides is called a pentagon; one which has six sides, a hexagon, and so on.
+    </div>
+    <div id="defn1_32" class="pp">
+        xxxii. A circle is a plane figure formed by a curved line called the circumference, and is such that
+        all right lines drawn from a certain point within the figure to the circumference are equal to one
+        another. This point is called the centre.
+    </div>
+    <div id="defn1_33" class="pp">
+        xxxiii. A radius of a circle is any right line drawn from the centre to the circumference.
+    </div>
+    <div id="defn1_34" class="pp">
+        xxxiv. A diameter of a circle is a right line drawn through the centre and terminated both ways by
+        the circumference.
+    </div>
+    <br />
+    <br />
+</td>
+</tr>
+<tr>
+<td>
+    <h2>
+        Postulates
+    </h2>
+    <div id="post1_0" class="pp">
+        Let it be granted that -
+    </div>
+    <div id="post1_1" class="pp">
+        i. A right line may be drawn from any one point to any other point. When we consider a
+        straight line contained between two fixed points which are its ends, such a portion is
+        called a finite straight line.
+    </div>
+    <div id="post1_2" class="pp">
+        ii. A terminated right line may be produced to any length in a right line.  Every right
+        line may extend without limit in either direction or in both. It is in these cases called
+        an indefinite line. By this postulate a finite right line may be supposed to be produced,
+        whenever we please, into an indefinite right line.
+    </div>
+    <div id="post1_3" class="pp">
+        iii. A circle may be described from any centre, and with any distance from that centre as radius.
+    </div>
+    <br />
+    <br />
+</td>
+</tr>
+<tr>
+<td>
+    <h2>
+        Axioms
+    </h2>
+    <div id="axiom1_1" class="pp">
+        i. Things which are equal to the same, or to equals, are equal to each other.
+    </div>
+    <div id="axiom1_2" class="pp">
+        ii. If equals be added to equals the sums will be equal.
+    </div>
+    <div id="axiom1_3" class="pp">
+        iii. If equals be taken from equals the remainders will be equal.
+    </div>
+    <div id="axiom1_4" class="pp">
+        iv. If equals be added to unequals the sums will be unequal.
+    </div>
+    <div id="axiom1_5" class="pp">
+        v. If equals be taken from unequals the remainders will be unequal.
+    </div>
+    <div id="axiom1_6" class="pp">
+        vi. The doubles of equal magnitudes are equal.
+    </div>
+    <div id="axiom1_7" class="pp">
+        vii. The halves of equal magnitudes are equal.
+    </div>
+    <div id="axiom1_8" class="pp">
+        viii. Magnitudes that can be made to coincide are equal.
+    </div>
+    <div id="axiom1_9" class="pp">
+        ix. The whole is greater than its part.
+    </div>
+    <div id="axiom1_9_0" class="pp">
+        ix0. The whole is equal to the sum of all its parts.
+    </div>
+    <div id="axiom1_10" class="pp">
+        x. Two right lines cannot enclose a space.
+    </div>
+    <div id="axiom1_11" class="pp">
+        xi. All right angles are equal to one another.
+    </div>
+    <div id="axiom1_12" class="pp">
+        xii. If two right lines (AB; CD) meet a third line (AC), so as to make the sum of the two interior angles (BAC; ACD) on the same side less than two right angles, these lines being produced shall meet at some finite distance.
+    </div>
+    <br />
+    <br />
+</td>
+</tr>
+<tr>
+<td>
+    <h2>
+        Propositions
+    </h2>
     <div id="prop1_1" class="prop">
     
         <div class="propTitle" id="prop1_1_0">
@@ -54,7 +261,7 @@
         </script>
 
         <div id="prop1_1_1" class="pp">
-            <b>Sol.</b>-With A as centre, and AB as radius, describe the circle BCD (Post. iii.).
+            <b>Sol.</b>-With A as centre, and AB as radius, describe the circle BCD (<A href="#post1_3">Post. iii.</A>).
         </div>
         <script>
             declareText(1, 1, 1, ['D', 'AB']);
@@ -68,7 +275,7 @@
         </script>
 
         <div id="prop1_1_3" class="pp">
-            Join CA, CB (Post. i.).
+            Join CA, CB (<A href="#post1_1">Post. i.</A>).
         </div>
         <script>
             declareText(1, 1, 3, ['BC', 'AC']);
@@ -82,7 +289,7 @@
         </script>
 
         <div id="prop1_1_5" class="pp">
-            <b>Dem.</b>-Because A is the centre of the circle BCD, AC is equal to AB (Def. xxxii.).
+            <b>Dem.</b>-Because A is the centre of the circle BCD, AC is equal to AB (<A href="#defn1_32">Def. xxxii.</A>).
         </div>
         <script>
             declareText(1, 1, 5, ['AB', 'AC', 'D']);
@@ -105,7 +312,7 @@
         </script>
 
         <div id="prop1_1_8" class="pp">
-            But things which are equal to the same are equal to one another (Axiom i.);
+            But things which are equal to the same are equal to one another (<A href="#axiom1_1">Axiom i.</A>);
             therefore AC is equal to BC;
         </div>
         <script>
@@ -114,13 +321,14 @@
 
         <div id="prop1_1_9" class="pp">
             therefore the three lines AB, BC, CA are equal
-            to one another. Hence the triangle ABC is equilateral (Def. xxi.); and it is
+            to one another. Hence the triangle ABC is equilateral (<A href="#defn1_21">Def. xxi.</A>); and it is
             described on the given line AB, which was required to be done.
         </div>
         <script>
             declareText(1, 1, 9, ['AB', 'BC', 'AC']);
         </script>
     </div>
+    <br />
 </td>
 <td>
     <canvas id="canvas1_1"></canvas>
@@ -172,35 +380,35 @@
         </script>
 
         <div id="prop1_2_1" class="pp">
-            <b>Sol.</b>-Join AB (Post. i.);
+            <b>Sol.</b>-Join AB (<A href="#post1_1">Post. i.</A>);
         </div>
         <script>
             declareText(1, 2, 1, ['AB']);
         </script>
 
         <div id="prop1_2_2" class="pp">
-            on AB describe the equilateral triangle ABD [i.].
+            on AB describe the equilateral triangle ABD [<A href="#prop1_1">i.</A>].
         </div>
         <script>
             declareText(1, 2, 2, ['AB', 'BD', 'AD']);
         </script>
 
         <div id="prop1_2_3" class="pp">
-            With B as centre, and BC as radius, describe the circle ECH (Post iii.).
+            With B as centre, and BC as radius, describe the circle ECH (<A href="#post1_3">Post iii.</A>).
         </div>
         <script>
             declareText(1, 2, 3, ['BC', 'H']);
         </script>
 
         <div id="prop1_2_4" class="pp">
-            Produce DB to meet the circle ECH in E (Post. ii.).
+            Produce DB to meet the circle ECH in E (<A href="#post1_2">Post. ii.</A>).
         </div>
         <script>
             declareText(1, 2, 4, ['BD', 'BE', 'H']);
         </script>
 
         <div id="prop1_2_5" class="pp">
-            With D as centre, and DE as radius, describe the circle EFG (Post. iii.).
+            With D as centre, and DE as radius, describe the circle EFG (<A href="#post1_3">Post. iii.</A>).
         </div>
         <script>
             declareText(1, 2, 5, ['BD', 'BE', 'G']);
@@ -221,14 +429,14 @@
         </script>
 
         <div id="prop1_2_8" class="pp">
-            <b>Dem.</b>-Because D is the centre of the circle EFG, DF is equal to DE (Def. xxxii.).
+            <b>Dem.</b>-Because D is the centre of the circle EFG, DF is equal to DE (<A href="#defn1_32">Def. xxxii.</A>).
         </div>
         <script>
             declareText(1, 2, 8, ['G', 'AD', 'AF', 'BD', 'BE']);
         </script>
 
         <div id="prop1_2_9" class="pp">
-            And because DAB is an equilateral triangle, DA is equal to DB (Def. xxi.).
+            And because DAB is an equilateral triangle, DA is equal to DB (<A href="#defn1_21">Def. xxi.</A>).
         </div>
         <script>
             declareText(1, 2, 9, ['AD', 'AB']);
@@ -244,7 +452,7 @@
         </script>
 
         <div id="prop1_2_11" class="pp">
-            and taking the latter from the former, the remainder AF is equal to the remainder BE (Axiom iii.).
+            and taking the latter from the former, the remainder AF is equal to the remainder BE (<A href="#axiom1_3">Axiom iii.</A>).
         </div>
         <script>
             declareText(1, 2, 11, ['AF', 'BE']);
@@ -259,7 +467,7 @@
 
         <div id="prop1_2_13" class="pp">
             and we have proved that AF is equal to BE; and things which are equal to the
-            same thing are equal to one another (Axiom i.).
+            same thing are equal to one another (<A href="#post1_1">Axiom i.</A>).
         </div>
         <script>
             declareText(1, 2, 13, ['AF', 'BE']);
@@ -295,7 +503,8 @@
 <br/>
 <hr/>
 
-<I>The source material was taken from <A href="http://www.gutenberg.org/ebooks/21076">http://www.gutenberg.org/ebooks/21076</A></I>
+This webpage is incomplete.  Euclid's Elements consists of 13 books, and book 1 contains 48 propositions.<br />
+The source material was taken from <A href="http://www.gutenberg.org/ebooks/21076">http://www.gutenberg.org/ebooks/21076</A>
 
 </body>
 </html>
