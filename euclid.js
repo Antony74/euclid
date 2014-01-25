@@ -77,7 +77,10 @@ var createMoveablePoint = function(_x, _y, _align)
             else
                 yAdj += 13;
 
-            processing.text(this.name, this.x + xAdj, this.y + yAdj);
+            if (this.align != 'hide')
+            {
+                processing.text(this.name, this.x + xAdj, this.y + yAdj);
+            }
         };
 
         this.hitTest = function(_x, _y)
@@ -113,7 +116,7 @@ var createLabelPoint = function(_align)
     return point;
 }
 
-var createLine = function(_pt1, _pt2)
+var createLine = function(_pt1, _pt2, _align)
 {
     var line =
     {
@@ -121,6 +124,7 @@ var createLine = function(_pt1, _pt2)
         'pt2': _pt2,
         'selected': false,
         'moveable': false,
+        'align': _align,
 
         'draw': function(processing)
         {
@@ -135,6 +139,20 @@ var createLine = function(_pt1, _pt2)
 
             processing.stroke(0);
             processing.line(this.pt1.x, this.pt1.y, this.pt2.x, this.pt2.y);
+
+            if (this.align != 'hide')
+            {
+                processing.fill(0);
+                var x = 0.5 * (this.pt1.x + this.pt2.x);
+                var y = 0.5 * (this.pt1.y + this.pt2.y);
+                x -= 12;
+                processing.text(this.name, x, y);
+            }
+        },
+        
+        'getLength': function()
+        {
+            return dist(this.pt1, this.pt2);
         },
     };
 
